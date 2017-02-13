@@ -1,0 +1,29 @@
+{
+  "name": "news-scraper",
+  "version": "1.0.0",
+  "description": "A web application that lets users leave comments on the latest news.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Slicktone/news-scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Slicktone/news-scraper/issues"
+  },
+  "homepage": "https://github.com/Slicktone/news-scraper#readme",
+  "dependencies": {
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.16.1",
+    "cheerio": "^0.22.0",
+    "express": "^4.14.1",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.8.2",
+    "morgan": "^1.8.1",
+    "request": "^2.79.0"
+  }
+}
