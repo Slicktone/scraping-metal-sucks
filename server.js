@@ -43,5 +43,23 @@ db.once("open", function() {
 // Routes
 
 // Index Route
-app.post("/")
+app.get("/", function(req, res) {
+    res.send(index.html);
+});
+
+// GET request to SCRAPE
+app.get("/scrape", function(req, res) {
+    request("http://www.blank.com/", function(error, response, html) {
+        var $ = cherrio.load(html);
+        // Grabbing an element and running the function
+        $("").each(function(i, element) {
+            var result = {};
+
+            result.title = $(this).children("a").text();
+            result.link = $(this).children("a").attr("href");
+
+            var entry = new Comment
+        })
+    })
+})
 
