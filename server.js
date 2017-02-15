@@ -49,17 +49,95 @@ app.get("/", function(req, res) {
 
 // GET request to SCRAPE
 app.get("/scrape", function(req, res) {
-    request("http://www.blank.com/", function(error, response, html) {
+    request("http://www.metalsucks.net", function(error, response, html) {
         var $ = cherrio.load(html);
         // Grabbing an element and running the function
-        $("").each(function(i, element) {
+        $("article a").each(function(i, element) {
             var result = {};
 
             result.title = $(this).children("a").text();
             result.link = $(this).children("a").attr("href");
+            // Creating a new entry with Article model
+            var entry = new Article(result);
+            console.log(entry);
+            entry.save(function(error, doc) {
+                if (error) {
+                    console.log(error);
+                }
+                else {
+                    console.log(doc);
+                    // For Async
+                    if (i === $("article h2").length - 1) {
+                        res.send("Scrape Complete");
+                    }
+                }
+            });
+        });
+    });
+});
 
-            var entry = new Comment
-        })
-    })
-})
+// Grabbing ALL the articles
+app.get("/articles", function(req, res) {
+    Article.find({}, function(error, doc) {
+        if(error) {
+            console.log(error);
+        }
+        else {
+            res.json(doc);
+        }
+    });
+});
 
+// Grabbing the articles by ID
+app.get("/articles/:id", function(req, res) {
+    Article.findOne({"_id": req.params.id})
+    .populate("comment")
+    .exec(function(error, doc){
+        if(error) {
+            console.log(error);
+        }
+        else {
+            res.json(doc);
+        }
+    });
+});
+
+// Creating a new comment
+app.post("/articles/:id", function(req, res) {
+    var newComment = new Comment(req.body);
+        // saving comment to the DB
+        newComment.save(function(error, comment) {
+            if(error) {
+                res.send(error);
+            }
+            else {
+                // =========== TESTING THE COMMENT ===========
+                console.log(comment);
+                {
+                    _id: "12345",
+                    text: "****TEST***"
+                }
+                Article.findById(req.params.id, function(error, article) {
+                    if(error) {
+                        return console.log(error);
+                    }
+                    if(!article) {
+                        return console.log("Couldnt Find the Article!");
+                    }
+                    // Will return the created ID
+                    console.log(article.note);
+                    article.save(function(error, updatedArticle) {
+                        if(error) {
+                            return console.log(error);
+                        }
+                            res.json(updatedArticle);
+                    })
+                });
+            }
+        }); 
+    });
+
+
+app.listen(3000, function() {
+    console.log("This App is working...? Port 3000 I think");
+});
