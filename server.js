@@ -30,7 +30,10 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Database configuration
-mongoose.connect("mongodb://localhost/metal-sucks-scraper");
+// mongoose.connect("mongodb://localhost/metal-sucks-scraper");
+
+// Heroku MLAB database configuration
+mongoose.connect(" mongodb://heroku_vtpp86t3:bmfcvfbe53o7jql80o2fdvkjl7@ds153709.mlab.com:53709/heroku_vtpp86t3");
 var db = mongoose.connection;
 
 // Error Handling
