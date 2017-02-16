@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Slicktone/news-scraper#readme",
   "dependencies": {
+    "async": "^2.1.4",
     "bluebird": "^3.4.7",
     "body-parser": "^1.16.1",
     "cheerio": "^0.22.0",
